@@ -21,6 +21,13 @@ class MyBot:
         return random.choice(list(Direction))
 
 
+    def deconnectionPattern(self) -> Action:
+        return Action([Direction.UP, Direction.UP, Direction.UP,
+                               Direction.RIGHT,Direction.RIGHT,Direction.RIGHT,
+                               Direction.DOWN,Direction.DOWN,Direction.DOWN,
+                               Direction.LEFT,Direction.LEFT,Direction.LEFT,
+                               Direction.LEFT,Direction.LEFT,Direction.LEFT])
+
     def tick(self, state: GameState) -> Action:
         """
         (fr)
@@ -37,7 +44,6 @@ class MyBot:
         """
         if self.__first_turn:
             self.__first_turn = False
-            return Action(Pattern([Direction.UP, Direction.RIGHT]))
-       
-
-        return self.__random_action()
+            
+        return self.deconnectionPattern()
+    
