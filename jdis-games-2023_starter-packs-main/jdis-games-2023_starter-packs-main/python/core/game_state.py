@@ -75,12 +75,13 @@ class GameState:
 
     rows: int
     cols: int
+    tick: int
     players: Dict[str, Player]
 
     @classmethod
     def deserialize(cls, data: bytes) -> 'GameState':
         offset = 0
-        rows, cols, _ = struct.unpack_from('<III', data, offset)
+        rows, cols, tick = struct.unpack_from('<III', data, offset)
         offset += 12
 
         players: Dict[str, Player] = {}
@@ -118,7 +119,7 @@ class GameState:
                                   region=set(zip(region[::2], region[1::2])),
                                   teleport_cooldown=teleport_cooldown)
 
-        return cls(rows=rows, cols=cols, players=players)
+        return cls(rows=rows, cols=cols, tick=tick, players=players)
     
     def __str__(self) -> str:
         return f"GameState(rows={self.rows}, cols={self.cols}, players={self.players})"

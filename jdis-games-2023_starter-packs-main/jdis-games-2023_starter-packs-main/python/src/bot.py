@@ -1,6 +1,7 @@
 import random
 from core.action import Action, Direction, Pattern, Teleport
-from core.game_state import GameState
+from core.game_state import GameState, Player
+
 
 class MyBot:
     """
@@ -15,6 +16,9 @@ class MyBot:
     def __init__(self):
         self.__name = "BICHON"
         self.__first_turn = True
+        self.counter = 5
+        self.counterCopy = self.counter
+        self.counterDirection = 4
 
 
     def __random_action(self) -> Action:
@@ -22,18 +26,36 @@ class MyBot:
 
 
     def SetDeconnectionPattern(self) -> Action:
-        return Action(Pattern([Direction.UP, Direction.UP, Direction.UP,
-                               Direction.RIGHT,Direction.RIGHT,Direction.RIGHT,
+        return Action(Pattern([Direction.UP, Direction.UP, Direction.UP,Direction.UP, Direction.UP,
+                               Direction.RIGHT,Direction.RIGHT,Direction.RIGHT, Direction.RIGHT,
                                Direction.DOWN,Direction.DOWN,Direction.DOWN,
-                               Direction.LEFT,Direction.LEFT,Direction.LEFT,
+                               Direction.LEFT,Direction.LEFT,Direction.LEFT,Direction.LEFT,
                                Direction.LEFT,Direction.LEFT,Direction.LEFT]))
+
+
+    def cube(self) ->Action : 
+        if self.counterCopy > 0:
+            if self.counterDirection == 4 :
+                self.counterCopy =-1
+                return Action(Direction.UP)
+            if self.counterDirection == 3 :
+                self.counterCopy =-1
+                return Action(Direction.RIGHT)
+            if self.counterDirection == 2 :
+                self.counterCopy =-1
+                return Action(Direction.DOWN)
+            if self.counterDirection == 1 :
+                self.counterCopy =-1
+                return Action(Direction.LEFT) 
+        self.counterDirection -= 1
+        if self.counterDirection == 0 :
+            self.counter += 1  
+        self.counterCopy = self.counter
+        return Action(Direction.LEFT)
+
 
     def tick(self, state: GameState) -> Action:
         """
-        (fr)
-        Cette méthode est appelée à chaque tick de jeu. Vous pouvez y définir le comportement de
-        votre bot. Elle doit retourner une instance de `Action` qui sera exécutée par le serveur.
-
         (en)
         This method is called every game tick. You can define the behavior of your bot. It must 
         return an instance of `Action` which will be executed by the server.
@@ -47,5 +69,5 @@ class MyBot:
             self.SetDeconnectionPattern()
         
         
-        return 
+        return self.cube()
     
