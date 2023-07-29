@@ -13,7 +13,7 @@ class MyBot:
     between each call of the `tick` method.
     """
     def __init__(self):
-        self.__name = "name_of_my_super_cool_bot"
+        self.__name = "BICHON"
         self.__first_turn = True
 
 
@@ -21,12 +21,12 @@ class MyBot:
         return random.choice(list(Direction))
 
 
-    def deconnectionPattern(self) -> Action:
-        return Action([Direction.UP, Direction.UP, Direction.UP,
+    def SetDeconnectionPattern(self) -> Action:
+        return Action(Pattern([Direction.UP, Direction.UP, Direction.UP,
                                Direction.RIGHT,Direction.RIGHT,Direction.RIGHT,
                                Direction.DOWN,Direction.DOWN,Direction.DOWN,
                                Direction.LEFT,Direction.LEFT,Direction.LEFT,
-                               Direction.LEFT,Direction.LEFT,Direction.LEFT])
+                               Direction.LEFT,Direction.LEFT,Direction.LEFT]))
 
     def tick(self, state: GameState) -> Action:
         """
@@ -44,6 +44,8 @@ class MyBot:
         """
         if self.__first_turn:
             self.__first_turn = False
-            
-        return self.deconnectionPattern()
+            self.SetDeconnectionPattern()
+        
+        
+        return 
     
